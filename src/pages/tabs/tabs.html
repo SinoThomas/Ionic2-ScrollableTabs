@@ -1,0 +1,33 @@
+<ion-tabs [scrollable-tabs]="selectedTabIndex" color="{{tabsColor}}" mode='{{tabsMode}}' tabsHighlight="true" tabsPlacement="{{tabsPlacement}}">
+	<ion-tab [root]="HomeRoot" (ionSelect)="selectTab(1)" tabTitle="Home" tabIcon="home"></ion-tab>
+	<ion-tab [root]="CalendarRoot" (ionSelect)="selectTab(2)" tabTitle="Calendar" tabIcon="calendar"></ion-tab>
+	<ion-tab [root]="CameraRoot" (ionSelect)="selectTab(3)" tabTitle="Camera" tabIcon="camera"></ion-tab>
+	<ion-tab [root]="CloudRoot" (ionSelect)="selectTab(4)" tabTitle="Cloud" tabIcon="cloud"></ion-tab>
+	<ion-tab [root]="ContactRoot" (ionSelect)="selectTab(5)" tabTitle="Contact" tabIcon="contact"></ion-tab>
+	<ion-tab [root]="FolderRoot" (ionSelect)="selectTab(6)" tabTitle="Folder" tabIcon="folder"></ion-tab>
+	<ion-tab [root]="MapRoot" (ionSelect)="selectTab(7)" tabTitle="Map" tabIcon="map"></ion-tab>
+	<ion-tab [root]="SettingsRoot" (ionSelect)="selectTab(8)" tabTitle="Settings" tabIcon="settings"></ion-tab>
+	<ion-tab [root]="AboutRoot" (ionSelect)="selectTab(9)" tabTitle="About" tabIcon="information-circle"></ion-tab>
+</ion-tabs>
+
+<ion-list [style.marginTop.px]="200">
+	<ion-item>
+		<ion-label>Color</ion-label>
+		<ion-select [(ngModel)]="tabsColor">
+			<ion-option value="default">Default</ion-option>
+			<ion-option value="primary">Primary</ion-option>
+			<ion-option value="secondary">Secondary</ion-option>
+			<ion-option value="danger">Danger</ion-option>
+			<ion-option value="dark">Dark</ion-option>
+			<ion-option value="light">Light</ion-option>
+		</ion-select>
+	</ion-item>
+	<ion-item>
+		<ion-label>Tabs Mode</ion-label>
+		<ion-select [(ngModel)]="tabsMode" (ionChange)="presentChangeOrendationToast()">
+			<ion-option value="md">Material Design</ion-option>
+			<ion-option value="ios">ios</ion-option>
+			<ion-option value="wp">Windows Phone</ion-option>n>
+		</ion-select>
+	</ion-item>
+</ion-list>
