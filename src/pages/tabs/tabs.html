@@ -1,13 +1,19 @@
+<style>
+	.tabbar::after {
+		content: none;
+	}
+</style>
+
 <ion-tabs [scrollable-tabs]="selectedTabIndex" color="{{tabsColor}}" mode='{{tabsMode}}' tabsHighlight="true" tabsPlacement="{{tabsPlacement}}">
-	<ion-tab [root]="HomeRoot" (ionSelect)="selectTab(1)" tabTitle="Home" tabIcon="home"></ion-tab>
-	<ion-tab [root]="CalendarRoot" (ionSelect)="selectTab(2)" tabTitle="Calendar" tabIcon="calendar"></ion-tab>
-	<ion-tab [root]="CameraRoot" (ionSelect)="selectTab(3)" tabTitle="Camera" tabIcon="camera"></ion-tab>
-	<ion-tab [root]="CloudRoot" (ionSelect)="selectTab(4)" tabTitle="Cloud" tabIcon="cloud"></ion-tab>
-	<ion-tab [root]="ContactRoot" (ionSelect)="selectTab(5)" tabTitle="Contact" tabIcon="contact"></ion-tab>
-	<ion-tab [root]="FolderRoot" (ionSelect)="selectTab(6)" tabTitle="Folder" tabIcon="folder"></ion-tab>
-	<ion-tab [root]="MapRoot" (ionSelect)="selectTab(7)" tabTitle="Map" tabIcon="map"></ion-tab>
-	<ion-tab [root]="SettingsRoot" (ionSelect)="selectTab(8)" tabTitle="Settings" tabIcon="settings"></ion-tab>
-	<ion-tab [root]="AboutRoot" (ionSelect)="selectTab(9)" tabTitle="About" tabIcon="information-circle"></ion-tab>
+	<ion-tab [root]="HomeRoot" (ionSelect)="selectTab(1)" tabIcon="home" tabTitle="Home"></ion-tab>
+	<ion-tab [root]="CalendarRoot" (ionSelect)="selectTab(2)" tabIcon="calendar" tabTitle="Calendar"></ion-tab>
+	<ion-tab [root]="CameraRoot" (ionSelect)="selectTab(3)" tabIcon="camera" tabTitle="Camera"></ion-tab>
+	<ion-tab [root]="CloudRoot" (ionSelect)="selectTab(4)" tabIcon="cloud" tabTitle="Cloud"></ion-tab>
+	<ion-tab [root]="ContactRoot" (ionSelect)="selectTab(5)" tabIcon="contact" tabTitle="Contact"></ion-tab>
+	<ion-tab [root]="FolderRoot" (ionSelect)="selectTab(6)" tabIcon="folder" tabTitle="Folder"></ion-tab>
+	<ion-tab [root]="MapRoot" (ionSelect)="selectTab(7)" tabIcon="map" tabTitle="Map"></ion-tab>
+	<ion-tab [root]="SettingsRoot" (ionSelect)="selectTab(8)" tabIcon="settings" tabTitle="Settings"></ion-tab>
+	<ion-tab [root]="AboutRoot" (ionSelect)="selectTab(9)" tabIcon="information-circle" tabTitle="About"></ion-tab>
 </ion-tabs>
 
 <ion-list [style.marginTop.px]="200">

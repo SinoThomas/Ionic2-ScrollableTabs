@@ -28,6 +28,10 @@ export class ScrollableTabs implements AfterViewInit {
     // set tabbar overflow-x: scroll
     this.renderer.setElementStyle(this.tabbar, "overflow-x", "scroll");
 
+    // set tabbar overflow-y: hidden
+    this.renderer.setElementStyle(this.tabbar, "overflow-y", "hidden");
+
+
     this.selectTab(this.selectedTabIndex);
   }
 
@@ -51,7 +55,7 @@ export class ScrollableTabs implements AfterViewInit {
     let anchorWidth = tabBar_width / numOfAnchors;
     for (let i = 0; i < numOfAnchors; i++) {
       let element = this.tabbar.children[i];
-        this.renderer.setElementStyle(element, 'width', anchorWidth + 'px');
+      this.renderer.setElementStyle(element, 'width', anchorWidth + 'px');
     }
   }
 
