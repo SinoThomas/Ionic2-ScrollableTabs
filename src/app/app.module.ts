@@ -1,26 +1,17 @@
-import { NgModule } from '@angular/core';
-import { IonicApp, IonicModule } from 'ionic-angular';
-
+import { NgModule, ErrorHandler } from '@angular/core';
+import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-
-import { ScrollableTabs } from '../components/scrollable-tabs/scrollable-tabs';
-
-import { About } from '../pages/about/about';
-import { Calendar } from '../pages/calendar/calendar';
-import { Camera } from '../pages/camera/camera';
-import { Cloud } from '../pages/cloud/cloud';
-import { Contact } from '../pages/contact/contact';
-import { Folder } from '../pages/folder/folder';
-import { Home } from '../pages/home/home';
-import { Map } from '../pages/map/map';
-import { Settings } from '../pages/settings/settings';
+import { AboutPage } from '../pages/about/about';
+import { ContactPage } from '../pages/contact/contact';
+import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 
 @NgModule({
   declarations: [
     MyApp,
-    ScrollableTabs,
-    About, Calendar, Camera, Cloud, Contact, Folder, Home, Map, Settings,
+    AboutPage,
+    ContactPage,
+    HomePage,
     TabsPage
   ],
   imports: [
@@ -29,9 +20,11 @@ import { TabsPage } from '../pages/tabs/tabs';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    About, Calendar, Camera, Cloud, Contact, Folder, Home, Map, Settings,
+    AboutPage,
+    ContactPage,
+    HomePage,
     TabsPage
   ],
-  providers: []
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
-export class AppModule { }
+export class AppModule {}
