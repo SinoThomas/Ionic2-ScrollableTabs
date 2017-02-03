@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-
+import { Component, ViewChild } from '@angular/core';
 import { ToastController } from 'ionic-angular';
 
 import { About } from '../about/about';
@@ -11,6 +10,8 @@ import { Folder } from '../folder/folder';
 import { Home } from '../home/home';
 import { Map } from '../map/map';
 import { Settings } from '../settings/settings';
+
+import { ScrollableTabs } from '../../components/scrollable-tabs/scrollable-tabs';
 
 @Component({
   templateUrl: 'tabs.html'
@@ -29,18 +30,22 @@ export class TabsPage {
   MapRoot: any = Map;
   SettingsRoot: any = Settings;
 
-  selectedTabIndex: number = 1;
   tabsColor: string = "default";
   tabsMode: string = "md";
   tabsPlacement: string = "top";
 
+  tabToShow: Array<boolean> = [true, true, true, true, true, true, true, true, true];
+  scrollableTabsopts: any = {};
 
   constructor(private toastCtrl: ToastController) {
+  }
+
+  ionViewDidEnter() {
 
   }
 
-  selectTab(index: number) {
-    this.selectedTabIndex = index;
+  refreshScrollbarTabs() {
+    this.scrollableTabsopts = { refresh: true };    
   }
 
   presentChangeOrendationToast() {

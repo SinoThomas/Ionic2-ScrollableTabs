@@ -1,4 +1,5 @@
-import { Directive, AfterViewInit, ElementRef, Renderer, Input, SimpleChange } from '@angular/core';
+import { Directive, AfterViewInit, ElementRef, Renderer, Input, OnChanges, SimpleChange } from '@angular/core';
+import { Tabs, Tab } from 'ionic-angular'
 
 @Directive({
   selector: '[scrollable-tabs]',
@@ -7,62 +8,108 @@ import { Directive, AfterViewInit, ElementRef, Renderer, Input, SimpleChange } f
   }
 })
 export class ScrollableTabs implements AfterViewInit {
-  @Input('scrollable-tabs') selectedTabIndex: number = 1;
+  @Input('scrollable-tabs') ionTabs: Tabs;
+  @Input('opts') opts: any = {};
 
-  tabbar: HTMLElement;
+  currentTabIndex: number = 0;
+  tabs: Tab[] = [];
+  nativeTabbar: HTMLElement;
 
   constructor(public elemRef: ElementRef, public renderer: Renderer) {
   }
 
-  ngOnChanges(changes: { [propertyName: string]: SimpleChange }) {
-    if (changes['selectedTabIndex'].currentValue != changes['selectedTabIndex'].previousValue) {
-      this.selectTab(changes['selectedTabIndex'].currentValue);
+  ngOnChanges(changes: any) {
+    if (changes.hasOwnProperty('opts')) {
+      if (changes['opts'].currentValue.refresh) {
+        setTimeout(() => {
+          this.setAnchorStyles();
+          this.scrollToselectedTab();
+        }, 300);
+      }
     }
   }
 
   ngAfterViewInit() {
-    this.tabbar = this.elemRef.nativeElement.children["0"];
+    this.nativeTabbar = this.ionTabs._tabbar.nativeElement;
+    this.tabs = this.ionTabs._tabs;
+    this.currentTabIndex = this.ionTabs.selectedIndex;
+
+    this.ionTabs.ionChange.subscribe(() => {
+      this.scrollToselectedTab();
+    })
+
+    for (let i = 0; i < this.tabs.length; i++) {
+      this.tabs[i].ionSelect.subscribe(() => {
+        this.currentTabIndex = i;
+      });
+    }
+
+    // set tabbar overflow-x: scroll
+    this.renderer.setElementStyle(this.nativeTabbar, "overflow-x", "scroll");
+
+    // set tabbar overflow-y: hidden
+    this.renderer.setElementStyle(this.nativeTabbar, "overflow-y", "hidden");
 
     this.setAnchorStyles();
 
-    // set tabbar overflow-x: scroll
-    this.renderer.setElementStyle(this.tabbar, "overflow-x", "scroll");
-
-    // set tabbar overflow-y: hidden
-    this.renderer.setElementStyle(this.tabbar, "overflow-y", "hidden");
-
-
-    this.selectTab(this.selectedTabIndex);
+    this.scrollToselectedTab();
   }
 
   onResize(event: Event) {
     this.setAnchorStyles();
-    this.selectTab(this.selectedTabIndex);
+    setTimeout(() => {
+      this.scrollToselectedTab();
+    }, 300);
   }
 
   setAnchorStyles() {
-    let tabBar_width = this.tabbar.clientWidth;
-    let numOfAnchors = this.tabbar.children.length - 1;
-    let sumOfAnchorWidth = 0;
+    if (typeof (this.nativeTabbar) != "undefined") {
+      let tabBar_width = this.nativeTabbar.clientWidth;
+      let numOfTabs = this.tabs.length;
+      let numOfVisibleAnchors = 0;
+      let sumOfVisibleAnchorWidth = 0;
 
-    for (let i = 0; i < numOfAnchors; i++) {
-      let element = this.tabbar.children[i];
-      // set <a> display: inline-table
-      this.renderer.setElementStyle(element, 'display', 'inline-table');
-      sumOfAnchorWidth += element.clientWidth;
-    }
+      // loop through tab elements in tabs
+      for (let i = 0; i < numOfTabs; i++) {
+        let element = this.nativeTabbar.children[i];
+        // when Tab visible (effecting show property)
+        if (this.tabs[i]._isShown) {
+          numOfVisibleAnchors++;
+          // set <a> display: inline-table
+          this.renderer.setElementStyle(element, 'display', 'inline-table');
+          // set <a> width: 6rem
+          this.renderer.setElementStyle(element, 'width', '6rem');
+          // extra padding for title-only tags only
+          if (element.classList.contains("has-title-only")) {
+            // set <a> padding-top: 1.5rem
+            this.renderer.setElementStyle(element, 'padding-top', '1.5rem');
+          }
+          sumOfVisibleAnchorWidth += element.clientWidth;
+        }
+        else {
+          // set <a> display: none
+          this.renderer.setElementStyle(element, 'display', 'none');
+        }
+      }
 
-    let anchorWidth = tabBar_width / numOfAnchors;
-    for (let i = 0; i < numOfAnchors; i++) {
-      let element = this.tabbar.children[i];
-      this.renderer.setElementStyle(element, 'width', anchorWidth + 'px');
+      // to prevent extra space at end
+      if (sumOfVisibleAnchorWidth < tabBar_width) {
+        let anchorWidth = tabBar_width / numOfVisibleAnchors;
+        for (let i = 0; i < numOfTabs; i++) {
+          let element = this.nativeTabbar.children[i];
+          // when Tab not not visible effecting show property
+          if (!element.classList.contains("tab-hidden")) {
+            this.renderer.setElementStyle(element, 'width', anchorWidth + 'px');
+          }
+        }
+      }
     }
   }
 
-  selectTab(tabIndex: number) {
-    if (typeof this.tabbar != 'undefined') {
-      let tabBar_width = this.tabbar.clientWidth;
-      let selectedTab = this.tabbar.children[tabIndex - 1];
+  scrollToselectedTab() {
+    if (typeof this.nativeTabbar != 'undefined') {
+      let tabBar_width = this.nativeTabbar.clientWidth;
+      let selectedTab = this.nativeTabbar.children[this.currentTabIndex];
       let selectedTab_Width = selectedTab.clientWidth;
       let selectedTab_LeftOffset = document.getElementById(selectedTab.id).offsetLeft;
       let selectedTab_mid = selectedTab_LeftOffset + (selectedTab_Width / 2);
@@ -74,7 +121,7 @@ export class ScrollableTabs implements AfterViewInit {
 
   scrollXTo(x: number, duration: number = 300): Promise<any> {
     // scroll animation loop w/ easing
-    let tabbar = this.tabbar;
+    let tabbar = this.nativeTabbar;
 
     if (!tabbar) {
       // invalid element
