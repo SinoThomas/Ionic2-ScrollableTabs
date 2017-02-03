@@ -24,7 +24,7 @@ This is demo of Scrollable Tabs Ionic 2 Plugin.
 * updated scrollable-tabs directive for Ionic 2.0
 * bugfix: [show] property of ion-tab
 * new implementation using local variable
-* new feacture opts for options
+* new feature opts for options
 
 ##Ionic Info
 
