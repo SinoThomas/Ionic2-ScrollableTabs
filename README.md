@@ -15,16 +15,25 @@ This is demo of Scrollable Tabs Ionic 2 Plugin.
 ##Using Plugin in other projects
 
 * Copy & paste Scrollable-Tabs component from <a href='/src/components/'>components folder</a>.
-* Import it in app.module.ts and tabs component.
-* Place [scrollable-tabs]="selectedTabIndex" in ion-tabs.<a href='/src/pages/tabs/tabs.html'>Sample</a>
+* Import it in app.module.ts and in tabs component.
+* Place  #ionTabs [scrollable-tabs]="ionTabs" in ion-tabs.<a href='/src/pages/tabs/tabs.html'>Sample</a>
+
+##Updates
+
+* updated Ionic lib to 2.0.0
+* updated scrollable-tabs directive for Ionic 2.0
+* bugfix: [show] property of ion-tab
+* new implementation using local variable
+* new feacture opts for options
 
 ##Ionic Info
 
-* Cordova CLI: 6.3.1
-* Gulp version: CLI version 3.9.1
-* Ionic CLI Version: 2.1.1
-* Ionic App Lib Version: 2.1.1
-* Node Version: v4.6.0
+* Cordova CLI: 6.5.0
+* Ionic Framework Version: 2.0.0
+* Ionic CLI Version: 2.2.1
+* Ionic App Lib Version: 2.2.0
+* Ionic App Scripts Version: 1.0.0
+* Node Version: v6.9.1
 
 
 ##Preview
