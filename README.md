@@ -37,4 +37,4 @@ This is demo of Scrollable Tabs Ionic 2 Plugin.
 
 
 ##Preview
- ![](/resources/Gifs/Ionic2-ScrollableTabs_demo.gif)
+ ![](/resources/Gifs/Ionic2-ScrollableTabsv1.0_demo.gif)
