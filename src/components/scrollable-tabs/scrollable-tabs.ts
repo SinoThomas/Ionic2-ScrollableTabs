@@ -11,7 +11,7 @@ export class ScrollableTabs implements AfterViewInit {
   @Input('scrollable-tabs') ionTabs: Tabs;
   @Input('opts') opts: any = {};
 
-  currentTabIndex: number = 0;
+  currentTabIndex: number;
   tabs: Tab[] = [];
   nativeTabbar: HTMLElement;
 
@@ -32,7 +32,7 @@ export class ScrollableTabs implements AfterViewInit {
   ngAfterViewInit() {
     this.nativeTabbar = this.ionTabs._tabbar.nativeElement;
     this.tabs = this.ionTabs._tabs;
-    this.currentTabIndex = this.ionTabs.selectedIndex;
+    this.currentTabIndex = typeof (this.ionTabs.selectedIndex) == "undefined" ? 0 : this.ionTabs.selectedIndex;
 
     this.ionTabs.ionChange.subscribe(() => {
       this.scrollToselectedTab();
